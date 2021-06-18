@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <title>スケジュール管理</title>
+   <meta charset="UTF-8" />
+</head>
+<body>
+    <h1>スケジュール管理トップ</h1>
+
+    <p><a href="/schedule/create">予定を追加する</a></p>
+    <p><a href="/schedule/update">予定を編集する</a></p>
+    <p><a href="/schedule/delete">予定を削除する</a></p>
+
+    <table id="schedule-list">
+        <tr>
+            <th>id</th>
+            <th>タイトル</th>
+            <th>内容</th>
+            <th>開始時間</th>
+            <th>終了時間</th>
+            <th>種別</th>
+        </tr>
+
+    </table>
+</body>
+</html>

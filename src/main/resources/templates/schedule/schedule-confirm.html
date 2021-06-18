@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>スケジュール確認</title>
+<meta charset="UTF-8" />
+<script th:src="@{/js/scheduleCreate.js}"></script>
+</head>
+<body>
+    <h1>スケジュール作成</h1>
+
+
+    <p>下のやつ確認して</p>
+
+    <form th:action="@{/schedule/complete}" th:object="${scheduleSessionForm}"
+        method="post">
+        <p class="schedule_title">タイトル</p>
+        <span th:text="*{scheduleForm.title}"></span>
+
+        <p class="schedule_content">詳細</p>
+        <span th:text="*{scheduleForm.content}"></span>
+
+        <p class="schedule_start">開始日</p>
+        <span th:text="*{scheduleForm.startDate}"></span>
+
+        <p class="schedule_start">開始時間</p>
+        <span th:text="*{scheduleForm.startTime}"></span>
+
+        <p class="schedule_end">終了日</p>
+        <span th:text="*{scheduleForm.endDate}"></span>
+
+        <p class="schedule_start">終了時間</p>
+        <span th:text="*{scheduleForm.endTime}"></span>
+
+        <p><input type="button" th:value="*{btnPrev}" class="btn"></p>
+        <p><input type="submit" th:value="*{btnExec}" class="btn"></p>
+
+         </form>
+</body>
+</html>

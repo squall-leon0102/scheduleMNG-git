@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>スケジュール作成</title>
+<meta charset="UTF-8" />
+<script th:src="@{/js/scheduleCreate.js}"></script>
+<script type="text/javascript">
+window.onload = function(){
+    document.onkeypress = enter;
+
+    function enter(){
+        if(window.event.keyCode == 13){
+            return false;
+        }
+    }
+}
+</script>
+</head>
+<body>
+    <h1>スケジュール作成</h1>
+
+
+    <p>下記事項入力よろでーす</p>
+
+    <form th:action="@{/schedule/confirm}" th:object="${scheduleSessionForm}"
+        method="post">
+        <p class="schedule_title">タイトル</p>
+        <input type="text" name="title" th:field="*{scheduleForm.title}">
+
+        <p class="schedule_content">詳細</p>
+        <input type="text" name="content" th:field="*{scheduleForm.content}">
+
+        <p class="schedule_start">開始日</p>
+        <input type="date" name="startDate" th:field="*{scheduleForm.startDate}">
+
+        <p class="schedule_start">開始時間</p>
+        <input type="time" name="startTime" th:field="*{scheduleForm.startTime}">
+
+        <p class="schedule_end">終了日</p>
+        <input type="date" name="endDate" th:field="*{scheduleForm.endDate}">
+
+        <p class="schedule_start">終了時間</p>
+        <input type="time" name="endTime" th:field="*{scheduleForm.endTime}">
+
+        <p class="schedule_type">予定の種別:</p>
+        <select id="typeId" name="scheduleSessionForm.scheduleForm.scheduleTypeForm.id" th:field="*{scheduleForm.scheduleTypeForm.id}">
+        <!-- 何も選択していないときに表示したいものを記述 -->
+        <option value="0">どんな予定？</option>
+        <!-- Modelで受け取ったForm内のリストを回す -->
+        <option th:each="type:${scheduleSessionForm.scheduleTypeFormList}" th:value="${type.id}" th:text="${type.name}" th:selected="${type.id == id}" ></option>
+        </select>
+
+        <p><input type="submit" value="次へ" class="btn"></p>
+
+    </form>
+</body>
+</html>
