@@ -1,6 +1,7 @@
 package example.application.controller.schedule;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,9 +45,14 @@ public class ScheduleController {
     @RequestMapping(path = "schedule/top", method = RequestMethod.GET)
     public String createTopPage(Model model) {
 
+        Map<String,String> map = scheduleHelper.getNowDateMap();
+
         model.addAttribute("scheduleIndexForm",
                 new ScheduleIndexForm(scheduleHelper.getScheduleFormListForIndex(scheduleService.getScheduleEntityAll()),
-                        scheduleHelper.scheduleTypeEntitiyListToScheduleTypeFormList(scheduleService.getScheduleTypeEntityAll())));
+                        scheduleHelper.scheduleTypeEntitiyListToScheduleTypeFormList(scheduleService.getScheduleTypeEntityAll()),
+                        map,scheduleHelper.createDayInfoForm(map, scheduleHelper.getScheduleFormListForIndex(
+                                scheduleService.getAllScheduleEntityByMonth(Integer.parseInt(map.get("year")),Integer.parseInt(map.get("month")))))));
+
         return "schedule/schedule-top";
     }
 

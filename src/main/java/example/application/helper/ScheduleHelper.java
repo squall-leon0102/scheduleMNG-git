@@ -4,10 +4,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import example.application.form.calendar.DayInfoForm;
 import example.application.form.schedule.ScheduleForm;
 import example.application.form.schedule.ScheduleTypeForm;
 import example.domain.entity.ScheduleEntity;
@@ -46,8 +49,8 @@ public class ScheduleHelper {
      * 日付と時刻を合体させる
      */
     public LocalDateTime mixDateAndTime(LocalDate localDate, LocalTime localTime) {
-//        String originDate = new SimpleDateFormat("yyyy-MM-dd").format(localDate);
-//        String originTime = new SimpleDateFormat("hh:mm:ss").format(localTime);
+        //        String originDate = new SimpleDateFormat("yyyy-MM-dd").format(localDate);
+        //        String originTime = new SimpleDateFormat("hh:mm:ss").format(localTime);
 
         return LocalDateTime.of(localDate, localTime);
     }
@@ -102,6 +105,93 @@ public class ScheduleHelper {
         return list;
     }
 
+    /**
+     * 指定年月から日付情報を取得
+     * @param year
+     * @param month
+     * @return
+     */
+    public Map<String,String> getDateMap(int year, int month){
 
+        Map<String,String> map = new HashMap<String, String>();
+        LocalDate localDate = LocalDate.of(year,month,1);
+        map.put("year", String.valueOf(year));
+        map.put("month", String.valueOf(month));
+        map.put("days", String.valueOf(localDate.lengthOfMonth()));
+        map.put("weekday", String.valueOf(localDate.getDayOfWeek().getValue()));
+        return map;
+    }
+
+    /**
+     * 現在の日付の日付情報を取得
+     * @return
+     */
+    public Map<String,String> getNowDateMap(){
+        LocalDate now = LocalDate.now();
+        return getDateMap(now.getYear(), now.getMonthValue());
+    }
+
+    /**
+     * 日付とその日のスケジュール情報をまとめたマップを返す
+     * @param map
+     * @param slist
+     * @return
+     */
+    public Map<String, List<ScheduleForm>> createDayInfoMap(Map<String,String> map, List<ScheduleForm> slist){
+
+        Map<String, List<ScheduleForm>> retMap = new HashMap<String, List<ScheduleForm>>();
+
+        int count = 0;
+        List<ScheduleForm> list = null;
+
+        for(ScheduleForm form: slist) {
+            if(count != form.getStartDate().getDayOfMonth()) {
+                count = form.getStartDate().getDayOfMonth();
+                list = new ArrayList<ScheduleForm>();
+                list.add(form);
+            }else {
+                list.add(form);
+            }
+            retMap.put(String.valueOf(count),list);
+        }
+
+        return retMap;
+    }
+
+    /**
+     * カレンダー作成
+     * @param map
+     * @param slist
+     * @return
+     */
+    public List<DayInfoForm> createDayInfoForm(Map<String,String> map,List<ScheduleForm> slist){
+
+        Map<String, List<ScheduleForm>> dayMap= createDayInfoMap(map,slist);
+
+        List<DayInfoForm> retList = new ArrayList<DayInfoForm>();
+        int weekDay = Integer.parseInt(map.get("weekday"));
+        int daysNum = Integer.parseInt(map.get("days"));
+
+        int firstBlanc = weekDay - 1;
+        int count = 0;
+        for(int i = 0; i<firstBlanc; i++) {
+            retList.add(new DayInfoForm("-"));
+            count++;
+        }
+
+        for (int i = 1; i <= daysNum; i++) {
+            retList.add(new DayInfoForm(String.valueOf(i), dayMap.get("i")));
+            count++;
+        }
+
+        if (count % 7 != 0) {
+            for (int i = 0; i < 7 - (count % 7); i++) {
+                retList.add(new DayInfoForm("-"));
+            }
+        }
+
+        return retList;
+    }
 
 }
+

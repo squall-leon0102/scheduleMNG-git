@@ -38,4 +38,10 @@ public interface ScheduleService {
      */
     public List<ScheduleEntity> getScheduleEntityAll();
 
+    /**
+     * 月を指定してスケジュール全件取得
+     * @return
+     */
+    public List<ScheduleEntity> getAllScheduleEntityByMonth(int year, int month);
+
 }

@@ -47,4 +47,10 @@ public class ScheduleServiceImp implements ScheduleService {
         return scheduleRepository.findAll();
     }
 
+    @Override
+    public List<ScheduleEntity> getAllScheduleEntityByMonth(int year, int month) {
+        // TODO 自動生成されたメソッド・スタブ
+        return scheduleRepository.findAllByMonth(year, month);
+    }
+
 }
