@@ -24,7 +24,7 @@ public class ScheduleHelper {
      * @return
      * ScheduleFormからScheduleEntityへの変換
      */
-    public ScheduleEntity scheduleFormToScheduleEntity(final ScheduleForm scheduleForm) {
+    public ScheduleEntity scheduleFormToScheduleEntity(ScheduleForm scheduleForm) {
         return new ScheduleEntity(scheduleForm.getId(),scheduleForm.getTitle(),scheduleForm.getContent(),
                 mixDateAndTime(scheduleForm.getStartDate(),scheduleForm.getStartTime()),
                 mixDateAndTime(scheduleForm.getEndDate(),scheduleForm.getEndTime()),
@@ -36,7 +36,7 @@ public class ScheduleHelper {
      * @param scheduleEntity
      * @return
      */
-    public ScheduleForm scheduleEntityToScheduleForm(final ScheduleEntity scheduleEntity) {
+    public ScheduleForm scheduleEntityToScheduleForm(ScheduleEntity scheduleEntity) {
         return new ScheduleForm(scheduleEntity.getId(),scheduleEntity.getTitle(),scheduleEntity.getContent(),scheduleEntity.getStartDate().toLocalDate(),
                 scheduleEntity.getStartDate().toLocalTime(),scheduleEntity.getEndDate().toLocalDate(),scheduleEntity.getEndDate().toLocalTime(),
                 scheduleEntity.getCreatedAt(),scheduleEntity.getUpdatedAt(),scheduleTypeEntityToScheduleTypeForm(scheduleEntity.getScheduleTypeEntity()));
@@ -175,12 +175,12 @@ public class ScheduleHelper {
         int firstBlanc = weekDay - 1;
         int count = 0;
         for(int i = 0; i<firstBlanc; i++) {
-            retList.add(new DayInfoForm("-"));
+            retList.add(new DayInfoForm(("-")));
             count++;
         }
 
         for (int i = 1; i <= daysNum; i++) {
-            retList.add(new DayInfoForm(String.valueOf(i), dayMap.get("i")));
+            retList.add(new DayInfoForm(String.valueOf(i), dayMap.get(String.valueOf(i))));
             count++;
         }
 
@@ -191,6 +191,12 @@ public class ScheduleHelper {
         }
 
         return retList;
+    }
+
+    public List<ScheduleForm> createNullScheduleFormList(){
+        List<ScheduleForm> list = new ArrayList<ScheduleForm>();
+        list.add(new ScheduleForm());
+        return list;
     }
 
 }

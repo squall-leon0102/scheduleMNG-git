@@ -3,9 +3,10 @@
 <head>
 <title>スケジュール管理</title>
 <meta charset="UTF-8" />
+<link th:href="@{/css/table.css}" rel="stylesheet">
 </head>
 <body>
-    <h1>スケジュール管理トップ</h1>
+    <h1 th:text="#{schedule.manage}"></h1>
 
     <p>
         <a href="/schedule/create">予定を追加する</a>
@@ -17,7 +18,7 @@
         <a href="/schedule/delete">予定を削除する</a>
     </p>
 
-    <table id="schedule-list">
+    <table>
         <thead>
             <tr>
                 <th>月</th>
@@ -30,10 +31,27 @@
             </tr>
         </thead>
         <tbody>
-        <th:block th:each="days : ${#numbers.sequence(1,scheduleIndexForm.calendar.get('days'))}">
+            <th:block th:each="days , stat: ${scheduleIndexForm.dayInfoFormList}">
+                <th:block th:if="${stat.count % 7 == 1}">
+                    <tr>
+                </th:block>
 
-        </th:block>
 
+                <td>
+                    <p th:text="${days.day}" />
+                    <th:block th:if="!${#lists.isEmpty(days.scheduleFormList)}">
+                        <th:block th:each="schedule:${days.scheduleFormList}">
+                            <a th:href="@{'/schedule/details/' + ${schedule.Id}}">
+                                <p th:text="${schedule.title}" />
+                            </a>
+                        </th:block>
+                    </th:block>
+                </td>
+
+                <th:block th:if="${stat.count % 7 ==0}">
+                    </tr>
+                </th:block>
+            </th:block>
         </tbody>
 
     </table>

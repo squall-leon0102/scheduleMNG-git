@@ -23,7 +23,7 @@ public class DayInfoForm {
     public DayInfoForm(String day, List<ScheduleForm> scheduleFormList) {
         super();
         this.day = day;
-        this.scheduleFormList = scheduleFormList;
+        this.setScheduleFormList(scheduleFormList);
     }
 
     public String getDay() {

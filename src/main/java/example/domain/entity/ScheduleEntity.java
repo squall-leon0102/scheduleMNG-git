@@ -37,6 +37,16 @@ public class ScheduleEntity {
         this.scheduleTypeEntity = scheduleTypeEntity;
     }
 
+
+//
+//    public ScheduleEntity(int id, String content, Timestamp startDate, Timestamp endDate,)
+
+    //My batisはデフォコンがないとうまく動かないから忘れないこと
+    public ScheduleEntity() {
+        super();
+        // TODO 自動生成されたコンストラクター・スタブ
+    }
+
     public int getId() {
         return id;
     }

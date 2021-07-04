@@ -9,10 +9,13 @@ public class ScheduleIndexForm {
 
     private List<ScheduleForm> scheduleFormList;
 
+    //予約種別の保持
     private List<ScheduleTypeForm> scheduleTypeFormList;
 
+    //カレンダー作成に必要な情報保持
     private Map<String, String> calendar;
 
+    //日付情報保持（日付、その日の予定のリスト）
     private List<DayInfoForm> dayInfoFormList;
 
     public ScheduleIndexForm() {
@@ -23,6 +26,14 @@ public class ScheduleIndexForm {
             Map<String, String> calendar, List<DayInfoForm> dayInfoFormList) {
         super();
         this.scheduleFormList = scheduleFormList;
+        this.scheduleTypeFormList = scheduleTypeFormList;
+        this.calendar = calendar;
+        this.dayInfoFormList = dayInfoFormList;
+    }
+
+    public ScheduleIndexForm(List<ScheduleTypeForm> scheduleTypeFormList,
+            Map<String, String> calendar, List<DayInfoForm> dayInfoFormList) {
+        super();
         this.scheduleTypeFormList = scheduleTypeFormList;
         this.calendar = calendar;
         this.dayInfoFormList = dayInfoFormList;

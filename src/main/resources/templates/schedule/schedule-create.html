@@ -24,7 +24,7 @@ window.onload = function(){
 
     <form th:action="@{/schedule/confirm}" th:object="${scheduleSessionForm}"
         method="post">
-        <p class="schedule_title">タイトル</p>
+        <p class="schedule_title" th:text="#{title}"></p>
         <input type="text" name="title" th:field="*{scheduleForm.title}">
 
         <p class="schedule_content">詳細</p>

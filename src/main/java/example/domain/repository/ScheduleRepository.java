@@ -53,12 +53,33 @@ public interface ScheduleRepository {
      * 指定月のスケジュールを取得
      * @return
      */
-    @Select("select * from schedule where year(start_date)=#{year} AND month(start_date)=#{month} ORDER BY start_date")
+    @Select("select "
+            + "id"
+            + ",title"
+            + ",start_date"
+            + ",end_date"
+            + ",type_id"
+            + ",content from schedule where year(start_date)=#{year} AND month(start_date)=#{month} ORDER BY start_date")
+    @Results({
+        @Result(property="scheduleTypeEntity", column="type_id", one = @One(select = "example.domain.repository.ScheduleTypeRepository.findOneById",
+                fetchType = FetchType.EAGER)),
+        @Result(property="startDate", column="start_date"),
+        @Result(property="endDate", column="end_date"),
+    })
+    public List<ScheduleEntity> findAllByMonth(int year, int month);
+
+    /**
+     * スケジュール1件取得
+     * @return
+     */
+    @Select("select * from schedule where id=#{id}")
     @Results({
         @Result(property="scheduleTypeEntity", column="type_id", one = @One(select = "example.domain.repository.ScheduleTypeRepository.findOneById",
                 fetchType = FetchType.EAGER)),
         @Result(property="insertDate", column="insert_date"),
-        @Result(property="updateDate", column="update_date")
+        @Result(property="updateDate", column="update_date"),
+        @Result(property="startDate", column="start_date"),
+        @Result(property="endDate", column="end_date"),
     })
-    public List<ScheduleEntity> findAllByMonth(int year, int month);
+    public ScheduleEntity findOneById(int id);
 }

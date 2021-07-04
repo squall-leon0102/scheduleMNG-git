@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -42,20 +43,32 @@ public class ScheduleController {
     }
 
 
+    /**
+     * スケジュール管理トップへの遷移
+     * @param model
+     * @return
+     */
     @RequestMapping(path = "schedule/top", method = RequestMethod.GET)
     public String createTopPage(Model model) {
 
         Map<String,String> map = scheduleHelper.getNowDateMap();
 
         model.addAttribute("scheduleIndexForm",
-                new ScheduleIndexForm(scheduleHelper.getScheduleFormListForIndex(scheduleService.getScheduleEntityAll()),
-                        scheduleHelper.scheduleTypeEntitiyListToScheduleTypeFormList(scheduleService.getScheduleTypeEntityAll()),
-                        map,scheduleHelper.createDayInfoForm(map, scheduleHelper.getScheduleFormListForIndex(
-                                scheduleService.getAllScheduleEntityByMonth(Integer.parseInt(map.get("year")),Integer.parseInt(map.get("month")))))));
+
+                new ScheduleIndexForm(
+                      scheduleHelper.scheduleTypeEntitiyListToScheduleTypeFormList(scheduleService.getScheduleTypeEntityAll()),
+                      map,scheduleHelper.createDayInfoForm(map, scheduleHelper.getScheduleFormListForIndex(
+                              scheduleService.getAllScheduleEntityByMonth(Integer.parseInt(map.get("year")),Integer.parseInt(map.get("month")))))));
 
         return "schedule/schedule-top";
     }
 
+    /**
+     * スケジュール新規作成画面への遷移
+     * @param scheduleSessionForm
+     * @param model
+     * @return
+     */
     @RequestMapping(path = "schedule/create", method = RequestMethod.GET)
     public String createSchedulePage(@ModelAttribute(FORM_NAME)ScheduleSessionForm scheduleSessionForm,Model model) {
 
@@ -70,6 +83,12 @@ public class ScheduleController {
         return "schedule/schedule-create";
     }
 
+    /**
+     * スケジュール確認画面への遷移
+     * @param scheduleSessionForm
+     * @param model
+     * @return
+     */
     @RequestMapping(path = "schedule/confirm", method = RequestMethod.POST)
     public String newSchedulePage(@ModelAttribute(FORM_NAME)ScheduleSessionForm scheduleSessionForm,Model model) {
 
@@ -80,6 +99,12 @@ public class ScheduleController {
         return "schedule/schedule-confirm";
     }
 
+    /**
+     * スケジュール登録完了画面
+     * @param scheduleSessionForm
+     * @param model
+     * @return
+     */
     @RequestMapping(path = "/schedule/complete", method = RequestMethod.POST)
     public String completeSchedulePage(@ModelAttribute(FORM_NAME)ScheduleSessionForm scheduleSessionForm, Model model) {
         ScheduleEntity scheduleEntity = scheduleHelper.scheduleFormToScheduleEntity(scheduleSessionForm.getScheduleForm());
@@ -88,6 +113,21 @@ public class ScheduleController {
         int result = scheduleService.setScheduleEntityAdd(scheduleEntity);
 
         return "schedule/schedule-complete";
+    }
+
+    /**
+     * スケジュール詳細画面への遷移
+     * @param scheduleSessionForm
+     * @param model
+     * @return
+     */
+    @RequestMapping(path="/schedule/details/{scheduleId}", method = RequestMethod.GET)
+    public String showScheduleDetail(@ModelAttribute(FORM_NAME)ScheduleSessionForm scheduleSessionForm, Model model, @PathVariable int scheduleId) {
+
+        scheduleSessionForm.setScheduleForm(scheduleHelper.scheduleEntityToScheduleForm(scheduleService.getScheduleEntityById(scheduleId)));
+        model.addAttribute("scheduleSessionForm", scheduleSessionForm);
+
+        return "schedule/schedule-details";
     }
 
     private String btnNameChange(String viewName) {

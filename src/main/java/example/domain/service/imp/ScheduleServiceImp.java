@@ -29,7 +29,7 @@ public class ScheduleServiceImp implements ScheduleService {
 
     @Override
     public ScheduleEntity getScheduleEntityById(int id) {
-        return null;
+        return scheduleRepository.findOneById(id);
     }
 
     @Override
