@@ -130,6 +130,20 @@ public class ScheduleController {
         return "schedule/schedule-details";
     }
 
+    /**
+     * スケジュール編集画面への遷移
+     * @param scheduleSessionForm
+     * @param model
+     * @return
+     */
+    @RequestMapping(path="/schedule/edit/{scheduleId}", method = RequestMethod.GET)
+    public String editSchedule(@ModelAttribute(FORM_NAME)ScheduleSessionForm scheduleSessionForm, Model model, @PathVariable int scheduleId) {
+
+        model.addAttribute("scheduleSessionForm", scheduleSessionForm);
+
+        return "schedule/schedule-edit";
+    }
+
     private String btnNameChange(String viewName) {
 
         String btnName = null;

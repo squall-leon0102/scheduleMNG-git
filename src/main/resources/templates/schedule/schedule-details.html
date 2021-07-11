@@ -1,24 +1,12 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/common-header :: common-header('schedule.detail')">
-<title th:text="#{schedule.detail}"></title>
-<meta charset="UTF-8" />
-<link th:href="@{/css/table.css}" rel="stylesheet">
+<head
+    th:replace="layout/common-header :: common-header('schedule.detail')">
 </head>
 <body>
-    <!-- <h1 th:text="#{schedule.detail}"></h1>
 
-    <p>
-        <a href="/schedule/create">予定を追加する</a>
-    </p>
-    <p>
-        <a href="/schedule/update">予定を編集する</a>
-    </p>
-    <p>
-        <a href="/schedule/delete">予定を削除する</a>
-    </p> -->
-
-    <th:block th:replace="layout/common-header :: body-header('schedule.detail')"></th:block>
+    <th:block
+        th:replace="layout/common-header :: body-header('schedule.detail')"></th:block>
 
     <table>
         <thead>
@@ -28,6 +16,7 @@
                 <th th:text="#{starttime}"></th>
                 <th th:text="#{endtime}"></th>
                 <th th:text="#{type}"></th>
+                <th th:text="#{operate}"></th>
             </tr>
         </thead>
         <tbody>
@@ -37,6 +26,11 @@
                 <td th:text="*{startTime}"></td>
                 <td th:text="*{endTime}"></td>
                 <td th:text="*{scheduleTypeForm.name}"></td>
+                <td>
+                    <a th:href="@{'/schedule/edit/' + *{Id}}">
+                        <p th:text="#{edit}" />
+                    </a>
+                </td>
             </tr>
         </tbody>
 

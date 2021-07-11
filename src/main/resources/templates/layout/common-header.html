@@ -1,26 +1,30 @@
 <html xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:fragment="common-header(title)">
 <title th:text="#{${title}}"></title>
 
 <!--/* 必ず読み込むファイル */-->
-  <link th:href="@{/css/table.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/css/table.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/css/style-header.css}" rel="stylesheet" type="text/css">
 
 <meta charset="UTF-8" />
 </head>
 <body>
     <header th:fragment="body-header(title)">
-        <h1 th:text="#{${title}}"></h1>
+        <h1 class="head-top">
+            <a href="/schedule/top" class="top-link">スケジュール管理</a>
+        </h1>
 
-        <p>
-            <a href="/schedule/create">予定を追加する</a>
-        </p>
-        <p>
-            <a href="/schedule/update">予定を編集する</a>
-        </p>
-        <p>
-            <a href="/schedule/delete">予定を削除する</a>
-        </p>
+
+
+        <nav class="head-nav">
+            <ul class="head-ul">
+                <li><a href="/schedule/create">予定を追加する</a></li>
+                <li><a href="/schedule/update">予定を編集する</a></li>
+                <li><a href="/schedule/delete">予定を削除する</a></li>
+            </ul>
+        </nav>
     </header>
+
 </body>
 </html>

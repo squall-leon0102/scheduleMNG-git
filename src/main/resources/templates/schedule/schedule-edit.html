@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/common-header :: common-header('schedule.create')">
-<script th:src="@{/js/scheduleCreate.js}"></script>
+<head th:replace="layout/common-header :: common-header('schedule.edit')">
 <script type="text/javascript">
 window.onload = function(){
     document.onkeypress = enter;
@@ -15,33 +14,33 @@ window.onload = function(){
 </script>
 </head>
 <body>
-    <th:block th:replace="layout/common-header :: body-header('schedule.create')"></th:block>
-    <h1>スケジュール作成</h1>
+    <th:block th:replace="layout/common-header :: body-header('schedule.edit')"></th:block>
+    <h1 th:text="#{schedule.edit}"></h1>
 
 
-    <p>下記事項入力よろでーす</p>
+    <p th:text="#{instruction.edit}"></p>
 
     <form th:action="@{/schedule/confirm}" th:object="${scheduleSessionForm}"
         method="post">
         <p class="schedule_title" th:text="#{title}"></p>
         <input type="text" name="title" th:field="*{scheduleForm.title}">
 
-        <p class="schedule_content">詳細</p>
+        <p class="schedule_content" th:text="#{detail}"></p>
         <input type="text" name="content" th:field="*{scheduleForm.content}">
 
-        <p class="schedule_start">開始日</p>
+        <p class="schedule_start" th:text="#{startdate}"></p>
         <input type="date" name="startDate" th:field="*{scheduleForm.startDate}">
 
-        <p class="schedule_start">開始時間</p>
+        <p class="schedule_start" th:text="#{starttime}"></p>
         <input type="time" name="startTime" th:field="*{scheduleForm.startTime}">
 
-        <p class="schedule_end">終了日</p>
+        <p class="schedule_end" th:text="#{enddate}"></p>
         <input type="date" name="endDate" th:field="*{scheduleForm.endDate}">
 
-        <p class="schedule_start">終了時間</p>
+        <p class="schedule_start" th:text="#{endtime}"></p>
         <input type="time" name="endTime" th:field="*{scheduleForm.endTime}">
 
-        <p class="schedule_type">予定の種別:</p>
+        <p class="schedule_type" th:text="#{schedule.type}"></p>
         <select id="typeId" name="scheduleSessionForm.scheduleForm.scheduleTypeForm.id" th:field="*{scheduleForm.scheduleTypeForm.id}">
         <!-- 何も選択していないときに表示したいものを記述 -->
         <option value="0">どんな予定？</option>

@@ -8,6 +8,8 @@ table, td, th{
 table{
     table-layout: fixed;
     width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 table th{
