@@ -7,15 +7,50 @@ table, td, th{
 
 table{
     table-layout: fixed;
-    width: 700px;
+    width: 70%;
+    height: 300px;
     margin-left: auto;
     margin-right: auto;
+    margin-top:3%;
+}
+
+.calendar-top{
+    table-layout: fixed;
+    width: 70%;
+    height: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:3%;
 }
 
 table th{
   text-align: center;
   color:white;
   background: linear-gradient(#829ebc,#225588);
+  border-left: 1px solid #3c6690;
+  border-top: 1px solid #3c6690;
+  border-bottom: 1px solid #3c6690;
+  box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
+  width: 25%;
+  padding: 10px 0;
+}
+
+.th-week{
+  text-align: center;
+  color:white;
+  background: linear-gradient(#829ebc,#225588);
+  border-left: 1px solid #3c6690;
+  border-top: 1px solid #3c6690;
+  border-bottom: 1px solid #3c6690;
+  box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
+  width: 25%;
+  padding: 10px 0;
+}
+
+.th-holiday{
+  text-align: center;
+  color:white;
+  background: linear-gradient(#f08300,#ec6d51);
   border-left: 1px solid #3c6690;
   border-top: 1px solid #3c6690;
   border-bottom: 1px solid #3c6690;
@@ -33,4 +68,5 @@ table td{
   box-shadow: 0px -3px 5px 1px #eee inset;
   width: 25%;
   padding: 10px 0;
+  background-color: #f8f4e6;
 }

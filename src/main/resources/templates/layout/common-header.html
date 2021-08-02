@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:fragment="common-header(title)">
+<head th:fragment="common-header(title,scripts)">
 <title th:text="#{${title}}"></title>
 
 <!--/* 必ず読み込むファイル */-->
@@ -8,6 +8,9 @@
 <link th:href="@{/css/style-header.css}" rel="stylesheet" type="text/css">
 
 <meta charset="UTF-8" />
+
+<!-- 各画面専用のjavascriptを定義します -->
+<th:block th:replace="${scripts}" />
 </head>
 <body>
     <header th:fragment="body-header(title)">

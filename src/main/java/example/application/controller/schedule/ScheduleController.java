@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import example.application.form.schedule.ScheduleForm;
@@ -61,6 +63,27 @@ public class ScheduleController {
                               scheduleService.getAllScheduleEntityByMonth(Integer.parseInt(map.get("year")),Integer.parseInt(map.get("month")))))));
 
         return "schedule/schedule-top";
+    }
+
+    /**
+     * カレンダー切替（前月、次月）
+     * @param reservationStatusForm
+     * @param model
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(path="schedule/top", method=RequestMethod.POST)
+    @ResponseBody
+    public ScheduleIndexForm makeAjaxCalendar(@ModelAttribute(FORM_NAME) ScheduleSessionForm session,@RequestBody ScheduleIndexForm scheduleIndexForm, Model model) throws Exception{
+
+        Map<String,String> map = scheduleHelper.getDateMap(Integer.parseInt(scheduleIndexForm.getCalendar().get("year")),Integer.parseInt(scheduleIndexForm.getCalendar().get("month")));
+
+        return new ScheduleIndexForm(
+                scheduleHelper.scheduleTypeEntitiyListToScheduleTypeFormList(scheduleService.getScheduleTypeEntityAll()),
+                map,scheduleHelper.createDayInfoForm(map, scheduleHelper.getScheduleFormListForIndex(
+                        scheduleService.getAllScheduleEntityByMonth(Integer.parseInt(map.get("year")),Integer.parseInt(map.get("month"))))));
+
     }
 
     /**

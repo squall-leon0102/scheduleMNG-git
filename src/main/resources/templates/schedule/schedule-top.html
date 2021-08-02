@@ -1,23 +1,40 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/common-header :: common-header('schedule.manage')">
+<head th:replace="layout/common-header :: common-header(title = 'schedule.manage',scripts = ~{::script})">
 <title th:text="#{schedule.manage}"></title>
 <meta charset="UTF-8" />
 <link th:href="@{/css/table.css}" rel="stylesheet">
+<!--
+<script src="https://unpkg.com/vue@next"></script>
+ -->
+<script src="js/schedule-top.js" th:src="@{/js/schedule-top.js}" type="text/javascript" ></script>
 </head>
 <body>
     <th:block th:replace="layout/common-header :: body-header('schedule.detail')"></th:block>
+    <input type="hidden" id="ajax_uri" th:value="@{/schedule/top}">
 
-    <table>
+    <div id="date">
+    <p class="display-month" id="year" th:text="${scheduleIndexForm.calendar.get('year')}"></p>
+    <p>年</p>
+    <p class="display-month" id="month" th:text="${scheduleIndexForm.calendar.get('month')}"></p>
+    <p>月</p>
+    </div>
+
+    <div class="change-month">
+    <input type="button" id="previous-month" th:value="#{previousmonth}">
+    <input type="button" id="next-month" th:value="#{nextmonth}">
+    </div>
+
+    <table class="calendar-top">
         <thead>
             <tr>
-                <th>月</th>
-                <th>火</th>
-                <th>水</th>
-                <th>木</th>
-                <th>金</th>
-                <th>土</th>
-                <th>日</th>
+                <th class="th-week">月</th>
+                <th class="th-week">火</th>
+                <th class="th-week">水</th>
+                <th class="th-week">木</th>
+                <th class="th-week">金</th>
+                <th class="th-holiday">土</th>
+                <th class="th-holiday">日</th>
             </tr>
         </thead>
         <tbody>
