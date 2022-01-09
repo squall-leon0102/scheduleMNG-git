@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/common-header :: common-header('schedule.create')">
+<head th:replace="layout/common-header :: common-header(title = 'schedule.create',scripts = ~{::script})">
 <script th:src="@{/js/scheduleCreate.js}"></script>
 <script type="text/javascript">
 window.onload = function(){

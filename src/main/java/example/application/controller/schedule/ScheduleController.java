@@ -22,6 +22,7 @@ import example.application.helper.ScheduleHelper;
 import example.domain.entity.ScheduleEntity;
 import example.domain.entity.ScheduleTypeEntity;
 import example.domain.service.ScheduleService;
+import example.utils.EntityUtils;
 
 @Controller
 @SessionAttributes(names = "scheduleSessionForm")
@@ -34,6 +35,9 @@ public class ScheduleController {
 
     @Autowired
     ScheduleService scheduleService;
+
+    @Autowired
+    EntityUtils entityUtils;
 
     /**
      * 施設情報管理コントローラー内で使用するセッションオブジェクトの生成処理
@@ -66,7 +70,7 @@ public class ScheduleController {
     }
 
     /**
-     * カレンダー切替（前月、次月）
+     * カレンダー切替
      * @param reservationStatusForm
      * @param model
      * @param id
@@ -75,14 +79,9 @@ public class ScheduleController {
      */
     @RequestMapping(path="schedule/top", method=RequestMethod.POST)
     @ResponseBody
-    public ScheduleIndexForm makeAjaxCalendar(@ModelAttribute(FORM_NAME) ScheduleSessionForm session,@RequestBody ScheduleIndexForm scheduleIndexForm, Model model) throws Exception{
+    public ScheduleIndexForm makeAjaxNextCalendar(@ModelAttribute(FORM_NAME) ScheduleSessionForm session,@RequestBody ScheduleIndexForm scheduleIndexForm, Model model) throws Exception{
 
-        Map<String,String> map = scheduleHelper.getDateMap(Integer.parseInt(scheduleIndexForm.getCalendar().get("year")),Integer.parseInt(scheduleIndexForm.getCalendar().get("month")));
-
-        return new ScheduleIndexForm(
-                scheduleHelper.scheduleTypeEntitiyListToScheduleTypeFormList(scheduleService.getScheduleTypeEntityAll()),
-                map,scheduleHelper.createDayInfoForm(map, scheduleHelper.getScheduleFormListForIndex(
-                        scheduleService.getAllScheduleEntityByMonth(Integer.parseInt(map.get("year")),Integer.parseInt(map.get("month"))))));
+        return entityUtils.makeScheduleIndexFormForCalendar(scheduleIndexForm);
 
     }
 

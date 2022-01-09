@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="layout/common-header :: common-header(title = 'schedule.confirm',scripts = ~{::script})">
 <title>スケジュール確認</title>
 <meta charset="UTF-8" />
 <script th:src="@{/js/scheduleCreate.js}"></script>

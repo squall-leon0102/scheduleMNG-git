@@ -37,7 +37,7 @@
 //        return new AuthLoginForm();
 //    }
 //
-//    @RequestMapping(path="/", method = RequestMethod.GET)
+//    @RequestMapping(path="/login", method = RequestMethod.GET)
 //    public String createLoginView(AuthLoginForm authLoginForm, Model model) {
 //
 //        model.addAttribute("authLoginForm", authLoginForm);
